@@ -3,22 +3,22 @@ import {createBottomTabNavigator} from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import customerScreen from './TabNavigator/customerScreen';
-import quoteScreen from './TabNavigator/quoteScreen';
-import invoiceScreen from './TabNavigator/invoiceScreen';
+import Sales from './TabNavigator/sales';
+import Order from './TabNavigator/order';
 import expenseScreen from './TabNavigator/expenseScreen';
 import budgetScreen from './TabNavigator/budgetScreen';
 
 export default class AppTabNavigator extends Component{
     
-    // static navigationOptions = ({navigation}) =>{
-    //     return{
-    //         headerLeft:(
-    //             <View style={{ padding: 10}}>
-    //                 <Ionicons name="md-menu" size={24} onPress={() => navigation.navigate('DrawerOpen')} />
-    //             </View>
-    //         )
-    //     }
-    // }
+    static navigationOptions = ({navigation}) =>{
+        return{
+            headerLeft:(
+                <View style={{ padding: 10}}>
+                    <Ionicons name="md-menu" size={24} onPress={() => navigation.navigate('DrawerOpen')} />
+                </View>
+            )
+        }
+    }
     static navigationOptions = {
         header: null
     }
@@ -40,19 +40,19 @@ const HomeScreenTabNavigator = new createBottomTabNavigator({
             )
         }
     },
-    quoteScreen:{
-        screen: quoteScreen,
+    Sales:{
+        screen: Sales,
         navigationOptions:{
-            tabBarLabel: 'Quotes',
+            tabBarLabel: 'Sales',
             tabBarIcon: ()=>(
                 <Ionicons name = "md-paper" size={24} />
             )
         }
     },
-    invoiceScreen:{
-        screen: invoiceScreen,
+    Order:{
+        screen: Order,
         navigationOptions:{
-            tabBarLabel: 'Invoices',
+            tabBarLabel: 'Orders',
             tabBarIcon: ()=>(
                 <Ionicons name = "md-copy" size={24} />
             )

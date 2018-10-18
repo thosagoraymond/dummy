@@ -1,127 +1,59 @@
 import React, {Component } from "react";
-import {View, StyleSheet,ScrollView,TouchableOpacity} from "react-native";
-import {Container, Content, Card, CardItem, Body, Text, Grid,Col,Header, Item, Input} from 'native-base';
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import {View, StyleSheet,FlatList,ScrollView,TouchableOpacity , ActivityIndicator,Modal,TextInput} from "react-native";
+import {Container, Content, Card, CardItem, Body, Text, Grid,Col,Header, Item, Input, ListItem} from 'native-base';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 class customerScreen extends Component{
-    render(){
-        return(
-            <ScrollView>
-                <View style={styles.container}>
-                        <Container>
-                            <Header searchBar rounded>
-                                <Item>
-                                    <Ionicons name = "md-search" size={24} />
-                                    <Input placeholder="Search" />
-                                </Item>
-                                {/* <Button>
-                                    <Text>Search</Text>
-                                </Button> */}
-                            </Header>
+    
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoading: true,
+            companyOrders: [],
+        }
+    }
+        componentDidMount = () => {
+            fetch('http://phoenix.myitzar.co.za:10080/erpcrm-con-presentation/ConUIServiceRestImpl/company_orders?companyname=Comfy%20and%20Pretty%20Fashion', {
+               method: 'GET',
+               headers:{
+                'Content-Type': 'application/json',
+                // 'Origin': 'http://localhost',
+                // 'Access-Control-Request-Method': 'POST',
+                'Access-Control-Request-Headers': 'content-type',
+                'Accept': 'application/json',
+              }
+            })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                    console.log(responseJson);
+               this.setState({
+                isLoading: false,
+                companyOrders: responseJson,
+                //companyOrders: responseJson.companyOrders
+               })
+            })
+            .catch((error) => {
+               console.error(error);
+            });
+         }
 
-                            <Content>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('#')} >
-                                    <Card transparent>
-                                        <CardItem bordered>
-                                            <Body>
-                                                <Grid>
-                                                    <Col>
-                                                        <Text style = {{ paddingBottom: 0}}>
-                                                            Bicycle Suppliers
-                                                        </Text>
-                                                     </Col>
-
-                                                     <Text style={{fontSize: 13,color: 'red'}}>
-                                                        -R150 000
-                                                     </Text>
-                                                </Grid>
-
-                                                <Grid>
-                                                    <Col>
-                                                        <Text style={{fontSize:12, fontStyle: 'italic' ,color: 'grey',paddingTop:5}}>
-                                                            Owen Jones
-                                                        </Text>
-                                                    </Col>
-                                                    <Text style={{fontSize: 13,color : 'grey'}}>
-                                                            +27 11 765 2845
-                                                    </Text>
-                                                </Grid>
-
-                                            </Body>
-                                        </CardItem>
-                                    </Card>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('#')} >
-                                    <Card transparent>
-                                        <CardItem bordered>
-                                            <Body>
-                                                <Grid>
-                                                    <Col>
-                                                        <Text style = {{ paddingBottom: 0}}>
-                                                            Ackermans 
-                                                        </Text>
-                                                     </Col>
-
-                                                     <Text style={{fontSize: 13,color: 'green'}}>
-                                                        R1 500 000
-                                                     </Text>
-                                                </Grid>
-
-                                                <Grid>
-                                                    <Col>
-                                                        <Text style={{fontSize:12, fontStyle: 'italic' ,color: 'grey',paddingTop:5}}>
-                                                            Raymond Ackermans
-                                                        </Text>
-                                                    </Col>
-                                                    <Text style={{fontSize: 13,color : 'grey'}}>
-                                                            +27 11 896 2345
-                                                    </Text>
-                                                </Grid>
-
-                                            </Body>
-                                        </CardItem>
-                                    </Card>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('#')} >
-                                    <Card transparent>
-                                        <CardItem bordered>
-                                            <Body>
-                                                <Grid>
-                                                    <Col>
-                                                        <Text style = {{ paddingBottom: 0}}>
-                                                            Morning View Suppliers
-                                                        </Text>
-                                                     </Col>
-
-                                                     <Text style={{fontSize: 13,color: 'green'}}>
-                                                        R150 000
-                                                     </Text>
-                                                </Grid>
-
-                                                <Grid>
-                                                    <Col>
-                                                        <Text style={{fontSize:12, fontStyle: 'italic' ,color: 'grey',paddingTop:5}}>
-                                                            John Smith
-                                                        </Text>
-                                                    </Col>
-                                                    <Text style={{fontSize: 13,color : 'grey'}}>
-                                                            +27 99 765 2345
-                                                    </Text>
-                                                </Grid>
-
-                                            </Body>
-                                        </CardItem>
-                                    </Card>
-                                </TouchableOpacity>
-                            </Content>
-                        </Container>
-                </View>
-            </ScrollView>
+   render() {
+    const {companyOrders} = this.state;
+    console.log("List of company orders inside render",companyOrders);
+        return (
+            <View>
+                {/* {productsList ? productsList.map((data,index) => {
+                    return(
+                        <Text key={index}>
+                            {data.customerid}
+                        </Text>
+                    )
+                }): null } */}
+            </View>
         );
     }
 }
+
 export default customerScreen;
 
 const styles = StyleSheet.create({
